@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulateur Induction - Terminale Libanaise</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h1, h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .interactive-zone { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        input[type="range"] { width: 100%; }
+        .result { font-weight: bold; color: #e74c3c; font-size: 1.2em; }
+        .rule-box { background: #e8f4fd; border-left: 5px solid #3498db; padding: 15px; font-style: italic; }
+        .step { margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>🔬 Labo Interactif : Induction Électromagnétique</h1>
+    <p><i>Application dédiée aux élèves de Terminale (Bac Libanais) - Lycée SSCC Ain Ebel</i></p>
+
+    <div class="card">
+        <h2>1. Sens du Courant (Règle de la Main Droite)</h2>
+        <div class="rule-box">
+            <strong>Rappel du Guide :</strong> <br>
+            • <b>Pouce :</b> Champ B (Entrant ⊗) <br>
+            • <b>Index :</b> Force de Laplace f (Vers la gauche ←, s'oppose au mouvement) <br>
+            • <b>Majeur :</b> Donne le sens de i (Vers le haut ↑, de N vers M)[cite: 18].
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>2. Simulateur de Calculs</h2>
+        <div class="interactive-zone">
+            <div>
+                <label>Champ Magnétique B (Tesla) : <span id="valB">0.5</span></label>
+                <input type="range" id="inputB" min="0.1" max="2" step="0.1" value="0.5">
+                
+                <label>Distance rails d (m) : <span id="valD">0.12</span></label>
+                <input type="range" id="inputD" min="0.05" max="0.5" step="0.01" value="0.12">
+
+                <label>Résistance R (Ω) : <span id="valR">0.012</span></label>
+                <input type="range" id="inputR" min="0.005" max="0.1" step="0.001" value="0.012">
+
+                <label>Vitesse v (m/s) : <span id="valV">2</span></label>
+                <input type="range" id="inputV" min="0" max="10" step="0.5" value="2">
+            </div>
+
+            <div style="background: #f9f9f9; padding: 15px; border-radius: 5px;">
+                <div class="step">Flux Φ = -B.d.x <br> <small>(Variation selon la position)</small></div>
+                <div class="step">f.é.m e = B.d.v = <span class="result" id="resE">0.12</span> V [cite: 20]</div>
+                <div class="step">Courant i = e/R = <span class="result" id="resI">10</span> A [cite: 21]</div>
+                <div class="step">Constante a = B²d²/R = <span class="result" id="resA">0.3</span> S.I. [cite: 22]</div>
+                <div class="step">Force f = a.v = <span class="result" id="resF">0.6</span> N</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>3. Équation Différentielle</h2>
+        <p>Pour une masse m = 0.3 kg, l'équation du mouvement est : [cite: 23, 24, 25]</p>
+        <div style="text-align: center; font-size: 1.5em; background: #2c3e50; color: white; padding: 20px; border-radius: 5px;">
+            dP/dt + (<span id="eqA">0.3</span> / 0.3)P = F
+        </div>
+    </div>
+
+    <script>
+        const inputs = ['B', 'D', 'R', 'V'];
+        inputs.forEach(id => {
+            document.getElementById('input' + id).addEventListener('input', update);
+        });
+
+        function update() {
+            const B = parseFloat(document.getElementById('inputB').value);
+            const d = parseFloat(document.getElementById('inputD').value);
+            const R = parseFloat(document.getElementById('inputR').value);
+            const v = parseFloat(document.getElementById('inputV').value);
+
+            document.getElementById('valB').innerText = B;
+            document.getElementById('valD').innerText = d;
+            document.getElementById('valR').innerText = R;
+            document.getElementById('valV').innerText = v;
+
+            const e = B * d * v;
+            const i = e / R;
+            const a = (B * B * d * d) / R;
+            const f = a * v;
+
+            document.getElementById('resE').innerText = e.toFixed(3);
+            document.getElementById('resI').innerText = i.toFixed(2);
+            document.getElementById('resA').innerText = a.toFixed(2);
+            document.getElementById('resF').innerText = f.toFixed(3);
+            document.getElementById('eqA').innerText = a.toFixed(2);
+        }
+    </script>
+</body>
+</html>
