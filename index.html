@@ -3,137 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application Induction - Terminale SG/SV</title>
+    <title>Master Induction - Terminale SG/SV</title>
     <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --success: #27ae60;
-            --error: #e74c3c;
-            --bg: #f8f9fa;
-        }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: #333; line-height: 1.6; padding: 20px; }
-        .container { max-width: 850px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        h1 { color: var(--primary); text-align: center; border-bottom: 3px solid var(--secondary); padding-bottom: 10px; }
-        .step-box { border: 2px solid #edf2f7; padding: 20px; margin-bottom: 20px; border-radius: 10px; display: none; position: relative; }
-        .active { display: block; border-color: var(--secondary); background: #f0f7ff; }
-        .completed { display: block; border-color: var(--success); background: #fafffa; opacity: 0.9; }
-        .step-number { position: absolute; top: -12px; left: 20px; background: var(--secondary); color: white; padding: 2px 12px; border-radius: 20px; font-weight: bold; font-size: 0.9em; }
-        h2 { font-size: 1.1em; color: var(--primary); margin-top: 5px; }
-        button { background: var(--secondary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; margin-top: 10px; }
-        button:hover { background: #2980b9; transform: translateY(-2px); }
-        input { padding: 8px; border: 2px solid #cbd5e0; border-radius: 5px; width: 140px; font-size: 1em; text-align: center; }
-        .feedback { margin-top: 12px; font-weight: bold; min-height: 1.2em; }
-        .formula-display { background: #2d3748; color: #a0aec0; padding: 15px; border-radius: 8px; font-family: 'Courier New', monospace; text-align: center; margin: 15px 0; font-size: 1.2em; }
-        .highlight { color: #edf2f7; font-weight: bold; }
+        :root { --primary: #2c3e50; --secondary: #3498db; --success: #27ae60; --error: #e74c3c; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: #333; padding: 20px; line-height: 1.5; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        h1 { border-bottom: 3px solid var(--secondary); padding-bottom: 10px; color: var(--primary); text-align: center; }
+        .step-box { border: 2px solid #eee; padding: 20px; margin-bottom: 15px; border-radius: 8px; display: none; }
+        .active { display: block; border-color: var(--secondary); background: #f9fcff; }
+        .completed { display: block; border-color: var(--success); background: #f1fcf4; opacity: 0.8; }
+        button { background: var(--secondary); color: white; border: none; padding: 10px 18px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.2s; }
+        button:hover { background: #2980b9; }
+        input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 150px; text-align: center; font-family: monospace; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .formula-box { background: #eee; padding: 10px; border-radius: 5px; text-align: center; margin: 10px 0; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🔬 Parcours Interactif : Induction</h1>
-    <p style="text-align: center;"><i>Résolvez chaque étape pour valider l'exercice </i></p>
+    <h1>🔬 Parcours de Résolution : Induction</h1>
+    <p><i>Suivez les 7 étapes pour maîtriser l'exercice.</i></p>
 
     <div id="step1" class="step-box active">
-        <span class="step-number">Étape 1</span>
-        <h2>Pourquoi un courant induit apparaît-il dans le circuit ? </h2>
-        <p>La tige MN se déplace vers la droite. Choisissez la cause correcte :</p>
-        <button onclick="checkStep(1, 'flux')">La surface varie, donc le flux magnétique Φ varie</button>
-        <button onclick="checkStep(1, 'champ')">Le champ magnétique B devient plus fort</button>
+        <h2>1. Existence du courant induit </h2>
+        <p>Pourquoi un courant apparaît-il dans le circuit quand la tige MN se déplace ?</p>
+        <button onclick="check(1, 'flux')">La surface varie, donc le flux Φ varie</button>
+        <button onclick="check(1, 'champ')">Le champ magnétique B change d'intensité</button>
         <div id="fb1" class="feedback"></div>
     </div>
 
     <div id="step2" class="step-box">
-        <span class="step-number">Étape 2</span>
-        <h2>Préciser le sens du courant (Loi de Lenz) </h2>
-        <p>Appliquez la règle de la main droite : <b>Pouce</b> (B entrant ⊗), <b>Index</b> (Force de Laplace f vers la gauche ←). Quel est le sens de <b>i</b> ?</p>
-        <button onclick="checkStep(2, 'NM')">De N vers M (Sens anti-horaire)</button>
-        <button onclick="checkStep(2, 'MN')">De M vers N (Sens horaire)</button>
+        <h2>2. Sens du courant (Loi de Lenz) </h2>
+        <p>La force de Laplace <b>f</b> doit freiner le mouvement (vers la gauche). Quel est le sens de <b>i</b> dans la tige ?</p>
+        <button onclick="check(2, 'NM')">De N vers M (Sens positif ↑)</button>
+        <button onclick="check(2, 'MN')">De M vers N (Sens négatif ↓)</button>
         <div id="fb2" class="feedback"></div>
     </div>
 
     <div id="step3" class="step-box">
-        <span class="step-number">Étape 3</span>
-        <h2>Exprimer le flux magnétique Φ </h2>
-        <p>En prenant le sens positif anti-horaire (cos 180°), complétez l'expression :</p>
-        <div class="formula-display">Φ = <input type="text" id="in3" placeholder="-B*d*x"></div>
-        <button onclick="checkStep(3, '-bdx')">Valider la formule</button>
+        <h2>3. Expression du flux Φ </h2>
+        <p>Sachant que cos(180°) = -1, quelle est l'expression de Φ ?</p>
+        <input type="text" id="in3" placeholder="-B*d*x">
+        <button onclick="check(3, '-bdx')">Valider</button>
         <div id="fb3" class="feedback"></div>
     </div>
 
     <div id="step4" class="step-box">
-        <span class="step-number">Étape 4</span>
-        <h2>Exprimer la f.é.m. induite e </h2>
-        <p>D'après Faraday (e = -dΦ/dt), exprimez <b>e</b> en fonction de <b>v</b> (v = dx/dt) :</p>
-        <div class="formula-display">e = <input type="text" id="in4" placeholder="B*d*v"></div>
-        <button onclick="checkStep(4, 'bdv')">Valider l'expression</button>
+        <h2>4. f.é.m induite e </h2>
+        <p>Sachant que e = -dΦ/dt et Φ = -B.d.x, exprimez <b>e</b> en fonction de <b>v</b> :</p>
+        <input type="text" id="in4" placeholder="B*d*v">
+        <button onclick="check(4, 'bdv')">Valider</button>
         <div id="fb4" class="feedback"></div>
     </div>
 
     <div id="step5" class="step-box">
-        <span class="step-number">Étape 5</span>
-        <h2>Exprimer l'intensité i du courant </h2>
-        <p>Appliquez la loi d'Ohm (i = e/R) pour trouver <b>i</b> en fonction de <b>v</b> :</p>
-        <div class="formula-display">i = <input type="text" id="in5" placeholder="B*d*v/R"></div>
-        <button onclick="checkStep(5, 'bdv/r')">Valider l'intensité</button>
+        <h2>5. Intensité i en fonction de v </h2>
+        <p>Appliquez la loi d'Ohm (i = e/R) :</p>
+        <input type="text" id="in5" placeholder="B*d*v/R">
+        <button onclick="check(5, 'bdv/r')">Valider</button>
         <div id="fb5" class="feedback"></div>
     </div>
 
     <div id="step6" class="step-box">
-        <span class="step-number">Étape 6</span>
-        <h2>Calculer la constante de force 'a' </h2>
-        <p>Données : B = 0.5 T, d = 0.12 m, R = 0.012 Ω. Calculez <b>a = B²d²/R</b> :</p>
-        <div class="formula-display">a = <input type="number" id="in6" step="0.1" style="width: 80px;"> S.I.</div>
-        <button onclick="checkStep(6, 0.3)">Vérifier le calcul</button>
+        <h2>6. Constante de force a </h2>
+        <p>Calculez <b>a = B²d²/R</b> (B=0.5, d=0.12, R=0.012) :</p>
+        <input type="number" id="in6" step="0.1"> S.I.
+        <button onclick="check(6, '0.3')">Vérifier</button>
         <div id="fb6" class="feedback"></div>
     </div>
 
     <div id="step7" class="step-box">
-        <span class="step-number">Étape 7</span>
-        <h2>Établir l'équation différentielle </h2>
-        <p>En appliquant dP/dt = ΣFext avec m = 0.3 kg :</p>
-        <div class="formula-display">
-            dP/dt + (<span class="highlight">0.3</span> / 0.3)P = F
-        </div>
-        <p style="text-align: center; color: var(--success); font-weight: bold;">🎯 Bravo ! Vous avez maîtrisé l'induction électromagnétique.</p>
+        <h2>7. Équation différentielle </h2>
+        <p>L'équation régissant la quantité de mouvement P est :</p>
+        <div class="formula-box">dP/dt + (0.3 / 0.3)P = F</div>
+        <p style="color:var(--success); font-weight:bold; text-align:center;">Félicitations ! Exercice terminé.</p>
     </div>
 </div>
 
 <script>
-    function checkStep(step, correct) {
-        let inputVal = "";
+    function check(step, correct) {
+        let isCorrect = false;
         const fb = document.getElementById('fb' + step);
         
         if(document.getElementById('in' + step)) {
-            inputVal = document.getElementById('in' + step).value.replace(/\s/g, '').toLowerCase().replace(/\*/g, '');
+            let val = document.getElementById('in' + step).value.toLowerCase().replace(/\s/g, '').replace(/\*/g, '');
+            if(step === 6) isCorrect = (parseFloat(val) === 0.3);
+            else isCorrect = (val === correct);
         } else {
-            inputVal = correct;
-        }
-
-        const nextStep = step + 1;
-        let isCorrect = false;
-
-        // Logique de vérification
-        switch(step) {
-            case 1: isCorrect = (correct === 'flux'); break;
-            case 2: isCorrect = (correct === 'NM'); break;
-            case 3: isCorrect = (inputVal === "-bdx" || inputVal === "-dbx"); break;
-            case 4: isCorrect = (inputVal === "bdv" || inputVal === "dbv"); break;
-            case 5: isCorrect = (inputVal === "bdv/r" || inputVal === "dbv/r" || inputVal === "(bdv)/r"); break;
-            case 6: isCorrect = (parseFloat(document.getElementById('in6').value) === 0.3); break;
+            isCorrect = (correct === 'flux' || correct === 'NM');
         }
 
         if(isCorrect) {
-            fb.innerHTML = "✅ Excellent !";
-            fb.style.color = "var(--success)";
+            fb.innerHTML = "✅ Correct !"; fb.style.color = "var(--success)";
             document.getElementById('step' + step).className = "step-box completed";
-            if(document.getElementById('step' + nextStep)) {
-                document.getElementById('step' + nextStep).className = "step-box active";
-                document.getElementById('step' + nextStep).scrollIntoView({ behavior: 'smooth' });
-            }
+            let next = step + 1;
+            if(document.getElementById('step' + next)) document.getElementById('step' + next).className = "step-box active";
         } else {
-            fb.innerHTML = "❌ Erreur. Vérifiez votre raisonnement ou vos unités.";
-            fb.style.color = "var(--error)";
+            fb.innerHTML = "❌ Réessayez."; fb.style.color = "var(--error)";
         }
     }
 </script>
