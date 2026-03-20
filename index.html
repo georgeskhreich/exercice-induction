@@ -3,100 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercice Induction - Terminale SG/SV</title>
+    <title>Application Induction - Terminale Liban</title>
     <style>
         :root { --primary: #2c3e50; --secondary: #3498db; --success: #27ae60; --error: #e74c3c; }
-        body { font-family: 'Arial', sans-serif; background: #f0f2f5; padding: 20px; line-height: 1.6; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 15px; shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .step-box { border: 2px solid #ecf0f1; padding: 20px; margin-bottom: 20px; border-radius: 10px; transition: 0.3s; }
-        .active { border-color: var(--secondary); background: #f7fbff; }
-        .locked { opacity: 0.5; pointer-events: none; }
-        h2 { color: var(--primary); margin-top: 0; }
-        button { background: var(--secondary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
-        input[type="text"], input[type="number"] { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 100px; }
-        .feedback { font-weight: bold; margin-top: 10px; }
-        .formula { background: #eee; padding: 5px 10px; font-family: "Courier New"; border-radius: 4px; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 20px; color: #333; }
+        .container { max-width: 850px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .step-box { border: 2px solid #eee; padding: 20px; margin-bottom: 15px; border-radius: 8px; display: none; }
+        .active { display: block; border-color: var(--secondary); background: #fcfdfd; }
+        .completed { display: block; border-color: var(--success); background: #f0fff4; opacity: 0.8; }
+        h2 { color: var(--primary); font-size: 1.2em; margin-top: 0; }
+        button { background: var(--secondary); color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        button:hover { background: #2980b9; }
+        input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 120px; font-weight: bold; }
+        .feedback { margin-top: 10px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>📝 Parcours Interactif : Induction Électromagnétique</h1>
-    <p><i>Suivez les étapes de votre exercice pour débloquer la solution complète.</i></p>
+    <h1>🔬 Apprentissage Guidé : Induction Électromagnétique</h1>
+    <p><i>Répondez correctement pour débloquer l'étape suivante.</i></p>
 
     <div id="step1" class="step-box active">
-        <h2>Étape 1 : Analyse Physique (Loi de Lenz) </h2>
-        <p>La tige MN se déplace vers la droite. D'après la loi de Lenz, quel est le sens de la force de Laplace <b>f</b> ?</p>
-        <button onclick="checkLenz('gauche')">Vers la gauche (s'oppose au mouvement)</button>
-        <button onclick="checkLenz('droite')">Vers la droite (accompagne le mouvement)</button>
+        <h2>1. Pourquoi un courant induit apparaît-il ? </h2>
+        <p>Lorsque la tige se déplace, la surface du circuit <i>CMNK</i> augmente. Quelle grandeur physique varie alors à travers le circuit ?</p>
+        <button onclick="checkStep(1, 'flux')">Le flux magnétique Φ</button>
+        <button onclick="checkStep(1, 'champ')">L'intensité du champ B</button>
         <div id="fb1" class="feedback"></div>
     </div>
 
-    <div id="step2" class="step-box locked">
-        <h2>Étape 2 : Flux Magnétique </h2>
-        <p>En choisissant un sens positif anti-horaire (vecteur surface sortant) et sachant que B est entrant (⊗)[cite: 15, 16]:</p>
-        <p>Φ = <input type="text" id="fluxInput" placeholder="ex: -B*d*x"> <i>(Utilisez B, d et x)</i></p>
-        <button onclick="checkFlux()">Valider la formule</button>
+    <div id="step2" class="step-box">
+        <h2>2. Préciser le sens du courant (Loi de Lenz) </h2>
+        <p>Appliquez la règle de la main droite : Pouce (B ⊗ entrant), Index (Force de Laplace f vers la gauche ←). Quel est le sens de <b>i</b> dans la tige ?</p>
+        <button onclick="checkStep(2, 'NM')">De N vers M (Sens positif ↑)</button>
+        <button onclick="checkStep(2, 'MN')">De M vers N (Sens négatif ↓)</button>
         <div id="fb2" class="feedback"></div>
     </div>
 
-    <div id="step3" class="step-box locked">
-        <h2>Étape 3 : Application Numérique </h2>
-        <p>Données : B = 0.5 T, d = 0.12 m, R = 0.012 Ω.</p>
-        <p>Calculez la valeur de la constante <b>a</b> (où f = a*v) :</p>
-        <p>a = <input type="number" id="aInput" step="0.1"> S.I.</p>
-        <button onclick="checkA()">Vérifier le calcul</button>
+    <div id="step3" class="step-box">
+        <h2>3. Expression du flux Φ </h2>
+        <p>Avec S = d * x et un sens positif anti-horaire (cos 180°), complétez :</p>
+        Φ = <input type="text" id="in3" placeholder="-B*d*x"> 
+        <button onclick="checkStep(3, '-B*d*x')">Valider</button>
         <div id="fb3" class="feedback"></div>
     </div>
 
-    <div id="step4" class="step-box locked">
-        <h2>Étape 4 : Synthèse (Équation Différentielle) [cite: 23, 24, 25]</h2>
-        <p>En appliquant le théorème de la quantité de mouvement (m = 0.3 kg)[cite: 16, 24]:</p>
-        <div class="formula">dP/dt + (a/m)P = F</div>
-        <p>Remplacez par les valeurs : dP/dt + (<span id="finalA">?</span> / 0.3)P = F</p>
-        <p><b>Félicitations !</b> Vous avez résolu l'exercice avec la rigueur du Bac Libanais.</p>
+    <div id="step4" class="step-box">
+        <h2>4. f.é.m. induite e </h2>
+        <p>D'après la loi de Faraday e = -dΦ/dt. Si Φ = -B.d.x, alors :</p>
+        e = <input type="text" id="in4" placeholder="B*d*(dx/dt)"> 
+        <button onclick="checkStep(4, 'B*d*v')">Valider (en fonction de v)</button>
+        <div id="fb4" class="feedback"></div>
+    </div>
+
+    <div id="step5" class="step-box">
+        <h2>5. Intensité du courant i </h2>
+        <p>D'après la loi d'Ohm (i = e/R), quelle est l'expression de i en fonction de v ?</p>
+        i = <input type="text" id="in5" placeholder="(B*d*v)/R"> 
+        <button onclick="checkStep(5, '(B*d*v)/R')">Valider</button>
+        <div id="fb5" class="feedback"></div>
+    </div>
+
+    <div id="step6" class="step-box">
+        <h2>6. Intensité de la force f </h2>
+        <p>On donne B=0.5, d=0.12, R=0.012. Calculez <b>a</b> dans f = a.v :</p>
+        a = <input type="number" id="in6" step="0.1"> S.I.
+        <button onclick="checkStep(6, 0.3)">Vérifier</button>
+        <div id="fb6" class="feedback"></div>
+    </div>
+
+    <div id="step7" class="step-box">
+        <h2>7. Équation différentielle </h2>
+        <p>En appliquant dP/dt = ΣF_ext, on obtient :</p>
+        <div style="background:#2c3e50; color:white; padding:15px; border-radius:5px; text-align:center; font-size:1.2em">
+            dP/dt + (0.3 / 0.3)P = F
+        </div>
+        <p style="color:var(--success); font-weight:bold;">Bravo ! Vous avez terminé l'exercice avec succès.</p>
     </div>
 </div>
 
 <script>
-    function checkLenz(choice) {
-        const fb = document.getElementById('fb1');
-        if(choice === 'gauche') {
-            fb.innerHTML = "✅ Correct ! La force de Laplace s'oppose toujours à la cause du mouvement. ";
-            fb.style.color = "var(--success)";
-            document.getElementById('step2').classList.remove('locked');
-            document.getElementById('step2').classList.add('active');
+    function checkStep(step, correct) {
+        let inputVal = "";
+        if(document.getElementById('in' + step)) {
+            inputVal = document.getElementById('in' + step).value.replace(/\s/g, '').toLowerCase();
         } else {
-            fb.innerHTML = "❌ Faux. Relisez la loi de Lenz : l'effet s'oppose à la cause. ";
-            fb.style.color = "var(--error)";
+            inputVal = correct; 
         }
-    }
 
-    function checkFlux() {
-        const input = document.getElementById('fluxInput').value.replace(/\s/g, '');
-        const fb = document.getElementById('fb2');
-        if(input === "-B*d*x" || input === "-Bdx") {
-            fb.innerHTML = "✅ Très bien. Le signe '-' vient du fait que B et S sont de sens opposés. ";
-            fb.style.color = "var(--success)";
-            document.getElementById('step3').classList.remove('locked');
-            document.getElementById('step3').classList.add('active');
-        } else {
-            fb.innerHTML = "❌ Indice : Φ = B.S.cos(α). Quel est l'angle α ici ? ";
-            fb.style.color = "var(--error)";
-        }
-    }
+        const fb = document.getElementById('fb' + step);
+        const nextStep = step + 1;
 
-    function checkA() {
-        const val = parseFloat(document.getElementById('aInput').value);
-        const fb = document.getElementById('fb3');
-        if(val === 0.3) {
-            fb.innerHTML = "✅ Parfait ! a = B²d²/R = (0.5² * 0.12²) / 0.012 = 0.3. ";
+        // Logique de validation simplifiée pour les formules
+        const isCorrect = (step === 1 && correct === 'flux') ||
+                          (step === 2 && correct === 'NM') ||
+                          (step === 3 && (inputVal === "-bdx" || inputVal === "-b*d*x")) ||
+                          (step === 4 && (inputVal === "bdv" || inputVal === "b*d*v")) ||
+                          (step === 5 && (inputVal === "(bdv)/r" || inputVal === "bdv/r" || inputVal === "(b*d*v)/r")) ||
+                          (step === 6 && parseFloat(inputVal) === 0.3);
+
+        if(isCorrect) {
+            fb.innerHTML = "✅ Correct !";
             fb.style.color = "var(--success)";
-            document.getElementById('finalA').innerText = "0.3";
-            document.getElementById('step4').classList.remove('locked');
-            document.getElementById('step4').classList.add('active');
+            document.getElementById('step' + step).className = "step-box completed";
+            if(document.getElementById('step' + nextStep)) {
+                document.getElementById('step' + nextStep).className = "step-box active";
+            }
         } else {
-            fb.innerHTML = "❌ Erreur de calcul. Vérifiez vos carrés et les unités (12cm = 0.12m). [cite: 16, 22]";
+            fb.innerHTML = "❌ Réessayez. Relisez l'énoncé ou votre guide.";
             fb.style.color = "var(--error)";
         }
     }
