@@ -2,106 +2,103 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Induction Magnétique - 7 Étapes - Terminale</title>
+    <title>Induction : Parcours 7 Étapes</title>
     <style>
-        :root { --primary: #2c3e50; --secondary: #3498db; --success: #27ae60; --error: #e74c3c; --bg: #f4f7f6; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: #333; padding: 20px; line-height: 1.6; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-        h1 { border-bottom: 3px solid var(--secondary); padding-bottom: 10px; color: var(--primary); text-align: center; }
-        .step-box { border: 2px solid #eee; padding: 20px; margin-bottom: 15px; border-radius: 8px; display: none; transition: 0.3s; }
-        .active { display: block; border-color: var(--secondary); background: #f9fcff; }
-        .completed { display: block; border-color: var(--success); background: #f1fcf4; opacity: 0.8; pointer-events: none; }
-        button { background: var(--secondary); color: white; border: none; padding: 10px 18px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 180px; text-align: center; font-family: monospace; font-weight: bold; }
-        .feedback { margin-top: 10px; font-weight: bold; }
-        .formula-card { background: #2c3e50; color: white; padding: 15px; border-radius: 5px; text-align: center; margin: 10px 0; font-size: 1.2em; }
+        body { font-family: sans-serif; background: #f0f2f5; padding: 20px; line-height: 1.6; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .step { display: none; border: 2px solid #e0e0e0; padding: 20px; margin-bottom: 15px; border-radius: 8px; }
+        .active { display: block; border-color: #3498db; background: #f7faff; }
+        .done { display: block; border-color: #27ae60; background: #f2faf4; opacity: 0.8; pointer-events: none; }
+        h2 { color: #2c3e50; font-size: 1.2em; margin-top: 0; }
+        button { background: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 200px; font-weight: bold; }
+        .msg { margin-top: 10px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🔬 Parcours Interactif : Les 7 Étapes de l'Induction</h1>
-    <p style="text-align: center;"><i>Répondez à chaque étape pour progresser dans l'exercice.</i></p>
+    <h1 style="text-align:center; color:#2c3e50;">🔬 Guide Interactif : Induction (Bac Libanais)</h1>
 
-    <div id="step1" class="step-box active">
-        <h2>Étape 1 : Pourquoi un courant induit apparaît-il ? </h2>
-        <p>Lorsque la tige MN se déplace vers la droite, la surface du circuit augmente. Quelle est la conséquence immédiate ?</p>
-        <button onclick="validate(1, 'flux')">Le flux magnétique Φ à travers le circuit varie</button>
-        <button onclick="validate(1, 'champ')">Le champ magnétique B change de direction</button>
-        <div id="fb1" class="feedback"></div>
+    <div id="s1" class="step active">
+        <h2>1. Existence du courant induit [cite: 18]</h2>
+        <p>Pourquoi un courant apparaît-il dans le circuit ?</p>
+        <button onclick="valider(1, 'flux')">Car le flux Φ varie</button>
+        <button onclick="valider(1, 'erreur')">Car le champ B est constant</button>
+        <div id="m1" class="msg"></div>
     </div>
 
-    <div id="step2" class="step-box">
-        <h2>Étape 2 : Préciser le sens du courant </h2>
-        <p>Le courant doit créer une force de Laplace <b>f</b> qui s'oppose au mouvement (vers la gauche). En utilisant la règle de la main droite (Pouce sur B entrant, Index sur f vers la gauche), quel est le sens de <b>i</b> ?</p>
-        <button onclick="validate(2, 'NM')">De N vers M (Sens positif ↑)</button>
-        <button onclick="validate(2, 'MN')">De M vers N (Sens négatif ↓)</button>
-        <div id="fb2" class="feedback"></div>
+    <div id="s2" class="step">
+        <h2>2. Sens du courant [cite: 18]</h2>
+        <p>Selon la règle de la main droite (B entrant, f vers la gauche), quel est le sens de i ?</p>
+        <button onclick="valider(2, 'NM')">De N vers M (positif)</button>
+        <button onclick="valider(2, 'MN')">De M vers N (négatif)</button>
+        <div id="m2" class="msg"></div>
     </div>
 
-    <div id="step3" class="step-box">
-        <h2>Étape 3 : Expression du flux magnétique Φ </h2>
-        <p>Sachant que B et S sont de sens opposés (angle de 180°), complétez l'expression du flux en fonction de B, d et x :</p>
-        <div class="formula-card">Φ = <input type="text" id="in3" placeholder="-B*d*x"></div>
-        <button onclick="validate(3, '-bdx')">Valider la formule</button>
-        <div id="fb3" class="feedback"></div>
+    <div id="s3" class="step">
+        <h2>3. Expression du flux Φ [cite: 19]</h2>
+        <p>Complétez l'expression (B, d, x) :</p>
+        Φ = <input type="text" id="i3" placeholder="-B*d*x">
+        <button onclick="valider(3, '-bdx')">Vérifier</button>
+        <div id="m3" class="msg"></div>
     </div>
 
-    <div id="step4" class="step-box">
-        <h2>Étape 4 : Expression de la f.é.m. induite e </h2>
-        <p>En utilisant la loi de Faraday (e = -dΦ/dt) et en sachant que v = dx/dt, exprimez <b>e</b> en fonction de B, d et v :</p>
-        <div class="formula-card">e = <input type="text" id="in4" placeholder="B*d*v"></div>
-        <button onclick="validate(4, 'bdv')">Valider e(v)</button>
-        <div id="fb4" class="feedback"></div>
+    <div id="s4" class="step">
+        <h2>4. f.é.m. induite e [cite: 20]</h2>
+        <p>Exprimez e en fonction de B, d et v (v = dx/dt) :</p>
+        e = <input type="text" id="i4" placeholder="B*d*v">
+        <button onclick="valider(4, 'bdv')">Vérifier</button>
+        <div id="m4" class="msg"></div>
     </div>
 
-    <div id="step5" class="step-box">
-        <h2>Étape 5 : Expression de l'intensité i </h2>
-        <p>En appliquant la loi d'Ohm (i = e/R), exprimez l'intensité <b>i</b> en fonction de B, d, v et R :</p>
-        <div class="formula-card">i = <input type="text" id="in5" placeholder="B*d*v/R"></div>
-        <button onclick="validate(5, 'bdv/r')">Valider i(v)</button>
-        <div id="fb5" class="feedback"></div>
+    <div id="s5" class="step">
+        <h2>5. Intensité i(v) [cite: 21]</h2>
+        <p>Appliquez i = e/R en fonction de v :</p>
+        i = <input type="text" id="i5" placeholder="B*d*v/R">
+        <button onclick="valider(5, 'bdv/r')">Vérifier</button>
+        <div id="m5" class="msg"></div>
     </div>
 
-    <div id="step6" class="step-box">
-        <h2>Étape 6 : Calcul de la constante de force 'a' </h2>
-        <p>Calculez la valeur numérique de <b>a = B²d²/R</b> (B=0.5 T, d=0.12 m, R=0.012 Ω) :</p>
-        <div class="formula-card">a = <input type="number" id="in6" step="0.1"> S.I.</div>
-        <button onclick="validate(6, 0.3)">Vérifier le calcul</button>
-        <div id="fb6" class="feedback"></div>
+    <div id="s6" class="step">
+        <h2>6. Constante de force a [cite: 22]</h2>
+        <p>Calculez a = B²d²/R (B=0.5, d=0.12, R=0.012) :</p>
+        a = <input type="number" id="i6" step="0.1"> S.I.
+        <button onclick="valider(6, 0.3)">Vérifier</button>
+        <div id="m6" class="msg"></div>
     </div>
 
-    <div id="step7" class="step-box">
-        <h2>Étape 7 : Équation différentielle finale </h2>
-        <p>En appliquant la loi de la quantité de mouvement (m = 0.3 kg), l'équation du premier ordre est :</p>
-        <div class="formula-card">dP/dt + (0.3 / 0.3)P = F</div>
-        <p style="color:var(--success); font-weight:bold; text-align:center;">Félicitations ! Vous avez complété les 7 étapes de l'exercice avec succès.</p>
+    <div id="s7" class="step">
+        <h2>7. Équation différentielle [cite: 23, 25]</h2>
+        <p>L'équation finale est :</p>
+        <div style="background:#2c3e50; color:white; padding:15px; border-radius:5px; text-align:center; font-size:1.2em;">
+            dP/dt + (0.3 / 0.3)P = F
+        </div>
+        <p style="color:#27ae60; font-weight:bold; text-align:center;">Félicitations, exercice terminé !</p>
     </div>
 </div>
 
 <script>
-    function validate(step, correct) {
-        let isCorrect = false;
-        const fb = document.getElementById('fb' + step);
+    function valider(n, corect) {
+        let ok = false;
+        let m = document.getElementById('m' + n);
         
-        if(document.getElementById('in' + step)) {
-            let val = document.getElementById('in' + step).value.toLowerCase().replace(/\s/g, '').replace(/\*/g, '');
-            if(step === 6) isCorrect = (parseFloat(val) === 0.3);
-            else if(step === 3) isCorrect = (val === "-bdx" || val === "-dbx");
-            else if(step === 4) isCorrect = (val === "bdv" || val === "dbv");
-            else if(step === 5) isCorrect = (val === "bdv/r" || val === "dbv/r");
+        if (n === 1 || n === 2) {
+            ok = (corect === 'flux' || corect === 'NM');
         } else {
-            isCorrect = (correct === 'flux' || correct === 'NM');
+            let val = document.getElementById('i' + n).value.toLowerCase().replace(/\s/g, '').replace(/\*/g, '');
+            if (n === 6) ok = (parseFloat(val) === 0.3);
+            else ok = (val === corect);
         }
 
-        if(isCorrect) {
-            fb.innerHTML = "✅ Correct !"; fb.style.color = "var(--success)";
-            document.getElementById('step' + step).className = "step-box completed";
-            let next = step + 1;
-            if(document.getElementById('step' + next)) document.getElementById('step' + next).className = "step-box active";
+        if (ok) {
+            m.innerHTML = "✅ Correct"; m.style.color = "#27ae60";
+            document.getElementById('s' + n).className = "step done";
+            if (document.getElementById('s' + (n+1))) {
+                document.getElementById('s' + (n+1)).className = "step active";
+            }
         } else {
-            fb.innerHTML = "❌ Réponse incorrecte. Relisez l'étape."; fb.style.color = "var(--error)";
+            m.innerHTML = "❌ Erreur, réessayez."; m.style.color = "#e74c3c";
         }
     }
 </script>
