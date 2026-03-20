@@ -66,4 +66,76 @@
         <h2>Exprimer la f.é.m. induite e </h2>
         <p>D'après Faraday (e = -dΦ/dt), exprimez <b>e</b> en fonction de <b>v</b> (v = dx/dt) :</p>
         <div class="formula-display">e = <input type="text" id="in4" placeholder="B*d*v"></div>
-        <button onclick="checkStep(4, 'bdv')">Valider l'expression</button
+        <button onclick="checkStep(4, 'bdv')">Valider l'expression</button>
+        <div id="fb4" class="feedback"></div>
+    </div>
+
+    <div id="step5" class="step-box">
+        <span class="step-number">Étape 5</span>
+        <h2>Exprimer l'intensité i du courant </h2>
+        <p>Appliquez la loi d'Ohm (i = e/R) pour trouver <b>i</b> en fonction de <b>v</b> :</p>
+        <div class="formula-display">i = <input type="text" id="in5" placeholder="B*d*v/R"></div>
+        <button onclick="checkStep(5, 'bdv/r')">Valider l'intensité</button>
+        <div id="fb5" class="feedback"></div>
+    </div>
+
+    <div id="step6" class="step-box">
+        <span class="step-number">Étape 6</span>
+        <h2>Calculer la constante de force 'a' </h2>
+        <p>Données : B = 0.5 T, d = 0.12 m, R = 0.012 Ω. Calculez <b>a = B²d²/R</b> :</p>
+        <div class="formula-display">a = <input type="number" id="in6" step="0.1" style="width: 80px;"> S.I.</div>
+        <button onclick="checkStep(6, 0.3)">Vérifier le calcul</button>
+        <div id="fb6" class="feedback"></div>
+    </div>
+
+    <div id="step7" class="step-box">
+        <span class="step-number">Étape 7</span>
+        <h2>Établir l'équation différentielle </h2>
+        <p>En appliquant dP/dt = ΣFext avec m = 0.3 kg :</p>
+        <div class="formula-display">
+            dP/dt + (<span class="highlight">0.3</span> / 0.3)P = F
+        </div>
+        <p style="text-align: center; color: var(--success); font-weight: bold;">🎯 Bravo ! Vous avez maîtrisé l'induction électromagnétique.</p>
+    </div>
+</div>
+
+<script>
+    function checkStep(step, correct) {
+        let inputVal = "";
+        const fb = document.getElementById('fb' + step);
+        
+        if(document.getElementById('in' + step)) {
+            inputVal = document.getElementById('in' + step).value.replace(/\s/g, '').toLowerCase().replace(/\*/g, '');
+        } else {
+            inputVal = correct;
+        }
+
+        const nextStep = step + 1;
+        let isCorrect = false;
+
+        // Logique de vérification
+        switch(step) {
+            case 1: isCorrect = (correct === 'flux'); break;
+            case 2: isCorrect = (correct === 'NM'); break;
+            case 3: isCorrect = (inputVal === "-bdx" || inputVal === "-dbx"); break;
+            case 4: isCorrect = (inputVal === "bdv" || inputVal === "dbv"); break;
+            case 5: isCorrect = (inputVal === "bdv/r" || inputVal === "dbv/r" || inputVal === "(bdv)/r"); break;
+            case 6: isCorrect = (parseFloat(document.getElementById('in6').value) === 0.3); break;
+        }
+
+        if(isCorrect) {
+            fb.innerHTML = "✅ Excellent !";
+            fb.style.color = "var(--success)";
+            document.getElementById('step' + step).className = "step-box completed";
+            if(document.getElementById('step' + nextStep)) {
+                document.getElementById('step' + nextStep).className = "step-box active";
+                document.getElementById('step' + nextStep).scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            fb.innerHTML = "❌ Erreur. Vérifiez votre raisonnement ou vos unités.";
+            fb.style.color = "var(--error)";
+        }
+    }
+</script>
+</body>
+</html>
