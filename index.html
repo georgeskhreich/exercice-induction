@@ -3,96 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulateur Induction - Terminale Libanaise</title>
+    <title>Exercice Induction - Terminale SG/SV</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f7f6; }
-        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        h1, h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
-        .interactive-zone { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        input[type="range"] { width: 100%; }
-        .result { font-weight: bold; color: #e74c3c; font-size: 1.2em; }
-        .rule-box { background: #e8f4fd; border-left: 5px solid #3498db; padding: 15px; font-style: italic; }
-        .step { margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        :root { --primary: #2c3e50; --secondary: #3498db; --success: #27ae60; --error: #e74c3c; }
+        body { font-family: 'Arial', sans-serif; background: #f0f2f5; padding: 20px; line-height: 1.6; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 15px; shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .step-box { border: 2px solid #ecf0f1; padding: 20px; margin-bottom: 20px; border-radius: 10px; transition: 0.3s; }
+        .active { border-color: var(--secondary); background: #f7fbff; }
+        .locked { opacity: 0.5; pointer-events: none; }
+        h2 { color: var(--primary); margin-top: 0; }
+        button { background: var(--secondary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; }
+        input[type="text"], input[type="number"] { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 100px; }
+        .feedback { font-weight: bold; margin-top: 10px; }
+        .formula { background: #eee; padding: 5px 10px; font-family: "Courier New"; border-radius: 4px; }
     </style>
 </head>
 <body>
 
-    <h1>🔬 Labo Interactif : Induction Électromagnétique</h1>
-    <p><i>Application dédiée aux élèves de Terminale (Bac Libanais) - Lycée SSCC Ain Ebel</i></p>
+<div class="container">
+    <h1>📝 Parcours Interactif : Induction Électromagnétique</h1>
+    <p><i>Suivez les étapes de votre exercice pour débloquer la solution complète.</i></p>
 
-    <div class="card">
-        <h2>1. Sens du Courant (Règle de la Main Droite)</h2>
-        <div class="rule-box">
-            <strong>Rappel du Guide :</strong> <br>
-            • <b>Pouce :</b> Champ B (Entrant ⊗) <br>
-            • <b>Index :</b> Force de Laplace f (Vers la gauche ←, s'oppose au mouvement) <br>
-            • <b>Majeur :</b> Donne le sens de i (Vers le haut ↑, de N vers M)[cite: 18].
-        </div>
+    <div id="step1" class="step-box active">
+        <h2>Étape 1 : Analyse Physique (Loi de Lenz) </h2>
+        <p>La tige MN se déplace vers la droite. D'après la loi de Lenz, quel est le sens de la force de Laplace <b>f</b> ?</p>
+        <button onclick="checkLenz('gauche')">Vers la gauche (s'oppose au mouvement)</button>
+        <button onclick="checkLenz('droite')">Vers la droite (accompagne le mouvement)</button>
+        <div id="fb1" class="feedback"></div>
     </div>
 
-    <div class="card">
-        <h2>2. Simulateur de Calculs</h2>
-        <div class="interactive-zone">
-            <div>
-                <label>Champ Magnétique B (Tesla) : <span id="valB">0.5</span></label>
-                <input type="range" id="inputB" min="0.1" max="2" step="0.1" value="0.5">
-                
-                <label>Distance rails d (m) : <span id="valD">0.12</span></label>
-                <input type="range" id="inputD" min="0.05" max="0.5" step="0.01" value="0.12">
-
-                <label>Résistance R (Ω) : <span id="valR">0.012</span></label>
-                <input type="range" id="inputR" min="0.005" max="0.1" step="0.001" value="0.012">
-
-                <label>Vitesse v (m/s) : <span id="valV">2</span></label>
-                <input type="range" id="inputV" min="0" max="10" step="0.5" value="2">
-            </div>
-
-            <div style="background: #f9f9f9; padding: 15px; border-radius: 5px;">
-                <div class="step">Flux Φ = -B.d.x <br> <small>(Variation selon la position)</small></div>
-                <div class="step">f.é.m e = B.d.v = <span class="result" id="resE">0.12</span> V [cite: 20]</div>
-                <div class="step">Courant i = e/R = <span class="result" id="resI">10</span> A [cite: 21]</div>
-                <div class="step">Constante a = B²d²/R = <span class="result" id="resA">0.3</span> S.I. [cite: 22]</div>
-                <div class="step">Force f = a.v = <span class="result" id="resF">0.6</span> N</div>
-            </div>
-        </div>
+    <div id="step2" class="step-box locked">
+        <h2>Étape 2 : Flux Magnétique </h2>
+        <p>En choisissant un sens positif anti-horaire (vecteur surface sortant) et sachant que B est entrant (⊗)[cite: 15, 16]:</p>
+        <p>Φ = <input type="text" id="fluxInput" placeholder="ex: -B*d*x"> <i>(Utilisez B, d et x)</i></p>
+        <button onclick="checkFlux()">Valider la formule</button>
+        <div id="fb2" class="feedback"></div>
     </div>
 
-    <div class="card">
-        <h2>3. Équation Différentielle</h2>
-        <p>Pour une masse m = 0.3 kg, l'équation du mouvement est : [cite: 23, 24, 25]</p>
-        <div style="text-align: center; font-size: 1.5em; background: #2c3e50; color: white; padding: 20px; border-radius: 5px;">
-            dP/dt + (<span id="eqA">0.3</span> / 0.3)P = F
-        </div>
+    <div id="step3" class="step-box locked">
+        <h2>Étape 3 : Application Numérique </h2>
+        <p>Données : B = 0.5 T, d = 0.12 m, R = 0.012 Ω.</p>
+        <p>Calculez la valeur de la constante <b>a</b> (où f = a*v) :</p>
+        <p>a = <input type="number" id="aInput" step="0.1"> S.I.</p>
+        <button onclick="checkA()">Vérifier le calcul</button>
+        <div id="fb3" class="feedback"></div>
     </div>
 
-    <script>
-        const inputs = ['B', 'D', 'R', 'V'];
-        inputs.forEach(id => {
-            document.getElementById('input' + id).addEventListener('input', update);
-        });
+    <div id="step4" class="step-box locked">
+        <h2>Étape 4 : Synthèse (Équation Différentielle) [cite: 23, 24, 25]</h2>
+        <p>En appliquant le théorème de la quantité de mouvement (m = 0.3 kg)[cite: 16, 24]:</p>
+        <div class="formula">dP/dt + (a/m)P = F</div>
+        <p>Remplacez par les valeurs : dP/dt + (<span id="finalA">?</span> / 0.3)P = F</p>
+        <p><b>Félicitations !</b> Vous avez résolu l'exercice avec la rigueur du Bac Libanais.</p>
+    </div>
+</div>
 
-        function update() {
-            const B = parseFloat(document.getElementById('inputB').value);
-            const d = parseFloat(document.getElementById('inputD').value);
-            const R = parseFloat(document.getElementById('inputR').value);
-            const v = parseFloat(document.getElementById('inputV').value);
-
-            document.getElementById('valB').innerText = B;
-            document.getElementById('valD').innerText = d;
-            document.getElementById('valR').innerText = R;
-            document.getElementById('valV').innerText = v;
-
-            const e = B * d * v;
-            const i = e / R;
-            const a = (B * B * d * d) / R;
-            const f = a * v;
-
-            document.getElementById('resE').innerText = e.toFixed(3);
-            document.getElementById('resI').innerText = i.toFixed(2);
-            document.getElementById('resA').innerText = a.toFixed(2);
-            document.getElementById('resF').innerText = f.toFixed(3);
-            document.getElementById('eqA').innerText = a.toFixed(2);
+<script>
+    function checkLenz(choice) {
+        const fb = document.getElementById('fb1');
+        if(choice === 'gauche') {
+            fb.innerHTML = "✅ Correct ! La force de Laplace s'oppose toujours à la cause du mouvement. ";
+            fb.style.color = "var(--success)";
+            document.getElementById('step2').classList.remove('locked');
+            document.getElementById('step2').classList.add('active');
+        } else {
+            fb.innerHTML = "❌ Faux. Relisez la loi de Lenz : l'effet s'oppose à la cause. ";
+            fb.style.color = "var(--error)";
         }
-    </script>
+    }
+
+    function checkFlux() {
+        const input = document.getElementById('fluxInput').value.replace(/\s/g, '');
+        const fb = document.getElementById('fb2');
+        if(input === "-B*d*x" || input === "-Bdx") {
+            fb.innerHTML = "✅ Très bien. Le signe '-' vient du fait que B et S sont de sens opposés. ";
+            fb.style.color = "var(--success)";
+            document.getElementById('step3').classList.remove('locked');
+            document.getElementById('step3').classList.add('active');
+        } else {
+            fb.innerHTML = "❌ Indice : Φ = B.S.cos(α). Quel est l'angle α ici ? ";
+            fb.style.color = "var(--error)";
+        }
+    }
+
+    function checkA() {
+        const val = parseFloat(document.getElementById('aInput').value);
+        const fb = document.getElementById('fb3');
+        if(val === 0.3) {
+            fb.innerHTML = "✅ Parfait ! a = B²d²/R = (0.5² * 0.12²) / 0.012 = 0.3. ";
+            fb.style.color = "var(--success)";
+            document.getElementById('finalA').innerText = "0.3";
+            document.getElementById('step4').classList.remove('locked');
+            document.getElementById('step4').classList.add('active');
+        } else {
+            fb.innerHTML = "❌ Erreur de calcul. Vérifiez vos carrés et les unités (12cm = 0.12m). [cite: 16, 22]";
+            fb.style.color = "var(--error)";
+        }
+    }
+</script>
 </body>
 </html>
