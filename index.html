@@ -2,103 +2,109 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Induction : Parcours 7 Étapes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Induction Magnétique - Terminale Liban</title>
     <style>
-        body { font-family: sans-serif; background: #f0f2f5; padding: 20px; line-height: 1.6; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .step { display: none; border: 2px solid #e0e0e0; padding: 20px; margin-bottom: 15px; border-radius: 8px; }
-        .active { display: block; border-color: #3498db; background: #f7faff; }
-        .done { display: block; border-color: #27ae60; background: #f2faf4; opacity: 0.8; pointer-events: none; }
-        h2 { color: #2c3e50; font-size: 1.2em; margin-top: 0; }
-        button { background: #3498db; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; width: 200px; font-weight: bold; }
-        .msg { margin-top: 10px; font-weight: bold; }
+        :root { --primary: #2c3e50; --secondary: #3498db; --success: #27ae60; --error: #e74c3c; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); color: #333; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 12px; shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        h1 { border-bottom: 3px solid var(--secondary); padding-bottom: 10px; color: var(--primary); text-align: center; font-size: 1.5em; }
+        .step-box { border: 2px solid #eee; padding: 20px; margin-bottom: 15px; border-radius: 8px; display: none; }
+        .active { display: block; border-color: var(--secondary); background: #f9fcff; }
+        .completed { display: block; border-color: var(--success); background: #f1fcf4; opacity: 0.8; }
+        button { background: var(--secondary); color: white; border: none; padding: 10px 18px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 160px; text-align: center; font-family: monospace; font-weight: bold; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .formula-box { background: #2c3e50; color: white; padding: 15px; border-radius: 5px; text-align: center; margin: 10px 0; font-size: 1.2em; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1 style="text-align:center; color:#2c3e50;">🔬 Guide Interactif : Induction (Bac Libanais)</h1>
+    <h1>🔬 Terminale : Parcours Interactif d'Induction</h1>
+    <p style="text-align: center;"><i>Complétez les 7 étapes de l'exercice [cite: 1]</i></p>
 
-    <div id="s1" class="step active">
-        <h2>1. Existence du courant induit [cite: 18]</h2>
-        <p>Pourquoi un courant apparaît-il dans le circuit ?</p>
-        <button onclick="valider(1, 'flux')">Car le flux Φ varie</button>
-        <button onclick="valider(1, 'erreur')">Car le champ B est constant</button>
-        <div id="m1" class="msg"></div>
+    <div id="step1" class="step-box active">
+        <h2>1. Existence du courant induit </h2>
+        <p>Pourquoi un courant apparaît-il dans le circuit quand la tige MN se déplace ?</p>
+        <button onclick="validate(1, 'flux')">La surface du circuit varie, donc le flux Φ varie</button>
+        <button onclick="validate(1, 'champ')">Le champ magnétique B change d'intensité</button>
+        <div id="fb1" class="feedback"></div>
     </div>
 
-    <div id="s2" class="step">
-        <h2>2. Sens du courant [cite: 18]</h2>
-        <p>Selon la règle de la main droite (B entrant, f vers la gauche), quel est le sens de i ?</p>
-        <button onclick="valider(2, 'NM')">De N vers M (positif)</button>
-        <button onclick="valider(2, 'MN')">De M vers N (négatif)</button>
-        <div id="m2" class="msg"></div>
+    <div id="step2" class="step-box">
+        <h2>2. Sens du courant (Loi de Lenz) </h2>
+        <p>La force de Laplace <b>f</b> doit freiner le mouvement (vers la gauche). Quel est le sens de <b>i</b> dans la tige ?</p>
+        <button onclick="validate(2, 'NM')">De N vers M (Sens positif ↑)</button>
+        <button onclick="check(2, 'MN')">De M vers N (Sens négatif ↓)</button>
+        <div id="fb2" class="feedback"></div>
     </div>
 
-    <div id="s3" class="step">
-        <h2>3. Expression du flux Φ [cite: 19]</h2>
-        <p>Complétez l'expression (B, d, x) :</p>
-        Φ = <input type="text" id="i3" placeholder="-B*d*x">
-        <button onclick="valider(3, '-bdx')">Vérifier</button>
-        <div id="m3" class="msg"></div>
+    <div id="step3" class="step-box">
+        <h2>3. Expression du flux Φ </h2>
+        <p>Sachant que B et S sont opposés (cos 180° = -1), exprimez Φ :</p>
+        <input type="text" id="in3" placeholder="-B*d*x">
+        <button onclick="validate(3, '-bdx')">Valider la formule</button>
+        <div id="fb3" class="feedback"></div>
     </div>
 
-    <div id="s4" class="step">
-        <h2>4. f.é.m. induite e [cite: 20]</h2>
-        <p>Exprimez e en fonction de B, d et v (v = dx/dt) :</p>
-        e = <input type="text" id="i4" placeholder="B*d*v">
-        <button onclick="valider(4, 'bdv')">Vérifier</button>
-        <div id="m4" class="msg"></div>
+    <div id="step4" class="step-box">
+        <h2>4. f.é.m induite e [cite: 20]</h2>
+        <p>Sachant que e = -dΦ/dt et v = dx/dt, exprimez <b>e</b> en fonction de <b>v</b> :</p>
+        <input type="text" id="in4" placeholder="B*d*v">
+        <button onclick="validate(4, 'bdv')">Valider e(v)</button>
+        <div id="fb4" class="feedback"></div>
     </div>
 
-    <div id="s5" class="step">
-        <h2>5. Intensité i(v) [cite: 21]</h2>
-        <p>Appliquez i = e/R en fonction de v :</p>
-        i = <input type="text" id="i5" placeholder="B*d*v/R">
-        <button onclick="valider(5, 'bdv/r')">Vérifier</button>
-        <div id="m5" class="msg"></div>
+    <div id="step5" class="step-box">
+        <h2>5. Intensité i en fonction de v [cite: 21]</h2>
+        <p>Appliquez la loi d'Ohm (i = e/R) pour trouver l'expression de <b>i</b> :</p>
+        <input type="text" id="in5" placeholder="B*d*v/R">
+        <button onclick="validate(5, 'bdv/r')">Valider i(v)</button>
+        <div id="fb5" class="feedback"></div>
     </div>
 
-    <div id="s6" class="step">
-        <h2>6. Constante de force a [cite: 22]</h2>
-        <p>Calculez a = B²d²/R (B=0.5, d=0.12, R=0.012) :</p>
-        a = <input type="number" id="i6" step="0.1"> S.I.
-        <button onclick="valider(6, 0.3)">Vérifier</button>
-        <div id="m6" class="msg"></div>
+    <div id="step6" class="step-box">
+        <h2>6. Constante de force a </h2>
+        <p>Données : B=0.5 T, d=0.12 m, R=0.012 Ω. Calculez <b>a = B²d²/R</b> :</p>
+        <input type="number" id="in6" step="0.1"> S.I.
+        <button onclick="validate(6, 0.3)">Vérifier la valeur</button>
+        <div id="fb6" class="feedback"></div>
     </div>
 
-    <div id="s7" class="step">
+    <div id="step7" class="step-box">
         <h2>7. Équation différentielle [cite: 23, 25]</h2>
-        <p>L'équation finale est :</p>
-        <div style="background:#2c3e50; color:white; padding:15px; border-radius:5px; text-align:center; font-size:1.2em;">
-            dP/dt + (0.3 / 0.3)P = F
-        </div>
-        <p style="color:#27ae60; font-weight:bold; text-align:center;">Félicitations, exercice terminé !</p>
+        <p>En utilisant m = 0.3 kg, l'équation finale pour la quantité de mouvement P est :</p>
+        <div class="formula-box">dP/dt + (0.3 / 0.3)P = F</div>
+        <p style="color:var(--success); font-weight:bold; text-align:center;">Félicitations ! Vous avez complété l'exercice.</p>
     </div>
 </div>
 
 <script>
-    function valider(n, corect) {
-        let ok = false;
-        let m = document.getElementById('m' + n);
+    function validate(step, correct) {
+        let isCorrect = false;
+        const fb = document.getElementById('fb' + step);
         
-        if (n === 1 || n === 2) {
-            ok = (corect === 'flux' || corect === 'NM');
-        } else {
-            let val = document.getElementById('i' + n).value.toLowerCase().replace(/\s/g, '').replace(/\*/g, '');
-            if (n === 6) ok = (parseFloat(val) === 0.3);
-            else ok = (val === corect);
-        }
-
-        if (ok) {
-            m.innerHTML = "✅ Correct"; m.style.color = "#27ae60";
-            document.getElementById('s' + n).className = "step done";
-            if (document.getElementById('s' + (n+1))) {
-                document.getElementById('s' + (n+1)).className = "step active";
+        if(document.getElementById('in' + step)) {
+            let val = document.getElementById('in' + step).value.toLowerCase().replace(/\s/g, '').replace(/\*/g, '');
+            if(step === 6) {
+                isCorrect = (parseFloat(val) === 0.3);
+            } else {
+                isCorrect = (val === correct);
             }
         } else {
-            m.innerHTML = "❌ Erreur, réessayez."; m.style.color = "#e74c3c";
+            isCorrect = (correct === 'flux' || correct === 'NM');
+        }
+
+        if(isCorrect) {
+            fb.innerHTML = "✅ Correct !"; fb.style.color = "var(--success)";
+            document.getElementById('step' + step).className = "step-box completed";
+            let next = step + 1;
+            if(document.getElementById('step' + next)) {
+                document.getElementById('step' + next).className = "step-box active";
+            }
+        } else {
+            fb.innerHTML = "❌ Réessayez. Relisez bien l'énoncé."; fb.style.color = "var(--error)";
         }
     }
 </script>
